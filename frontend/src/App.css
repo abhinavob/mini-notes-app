@@ -1,0 +1,275 @@
+.app-shell {
+  min-height: 100vh;
+  padding: 32px;
+}
+
+.hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.eyebrow {
+  margin: 0 0 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-size: 0.78rem;
+  color: #6b7280;
+}
+
+.hero h1 {
+  margin: 0;
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  line-height: 1;
+}
+
+.hero-copy {
+  max-width: 42rem;
+  margin-top: 12px;
+  color: #4b5563;
+}
+
+.toolbar {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.search-box,
+.stat-card,
+.sidebar,
+.content-panel,
+.note-card,
+.modal {
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  box-shadow: 0 18px 50px rgba(15, 23, 42, 0.08);
+  backdrop-filter: blur(16px);
+}
+
+.search-box {
+  border-radius: 24px;
+  padding: 18px;
+}
+
+.search-box label,
+.sidebar h2 {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 0.9rem;
+  color: #374151;
+}
+
+.search-box input,
+.modal input,
+.modal textarea {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #d1d5db;
+  border-radius: 14px;
+  padding: 12px 14px;
+  font: inherit;
+  background: #fff;
+}
+
+.stat-card {
+  border-radius: 24px;
+  min-width: 150px;
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.stat-value {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.stat-label {
+  color: #6b7280;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 240px minmax(0, 1fr);
+  gap: 20px;
+}
+
+.sidebar,
+.content-panel {
+  border-radius: 28px;
+  padding: 20px;
+}
+
+.tag-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.tag-filter,
+.secondary-button,
+.primary-button,
+.danger-button,
+.icon-button {
+  border: 0;
+  border-radius: 999px;
+  font: inherit;
+  cursor: pointer;
+}
+
+.tag-filter {
+  padding: 10px 14px;
+  text-align: left;
+  background: #eef2ff;
+  color: #3730a3;
+}
+
+.tag-filter.active {
+  background: #3730a3;
+  color: #fff;
+}
+
+.sidebar-empty,
+.state-message {
+  color: #6b7280;
+}
+
+.state-message.error {
+  color: #b91c1c;
+}
+
+.notes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.note-card {
+  border-radius: 24px;
+  padding: 18px;
+}
+
+.note-card-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: start;
+}
+
+.note-card h3 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.note-card-content {
+  margin: 12px 0 0;
+  color: #4b5563;
+  white-space: pre-wrap;
+}
+
+.note-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.tag-chip {
+  display: inline-flex;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: #e0e7ff;
+  color: #3730a3;
+  font-size: 0.85rem;
+}
+
+.primary-button,
+.secondary-button,
+.danger-button {
+  padding: 12px 16px;
+}
+
+.primary-button {
+  background: #111827;
+  color: #fff;
+}
+
+.secondary-button {
+  background: #e5e7eb;
+  color: #111827;
+}
+
+.danger-button {
+  background: #fee2e2;
+  color: #991b1b;
+  padding: 8px 12px;
+}
+
+.icon-button {
+  background: transparent;
+  font-size: 1.5rem;
+  line-height: 1;
+  color: #6b7280;
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgba(15, 23, 42, 0.42);
+}
+
+.modal {
+  width: min(560px, 100%);
+  border-radius: 28px;
+  padding: 20px;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.modal-form {
+  display: grid;
+  gap: 16px;
+}
+
+.modal-form label {
+  display: grid;
+  gap: 8px;
+  color: #374151;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: end;
+  gap: 12px;
+}
+
+@media (max-width: 900px) {
+  .hero,
+  .toolbar,
+  .layout {
+    grid-template-columns: 1fr;
+    display: grid;
+  }
+
+  .hero {
+    align-items: start;
+  }
+
+  .app-shell {
+    padding: 20px;
+  }
+}
