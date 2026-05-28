@@ -22,7 +22,10 @@ app = FastAPI(title="Mini Notes App")
 # Add CORS middleware
 app.add_middleware(
 	CORSMiddleware,
-	allow_origins=["*"],  # In production, specify the exact origins
+	allow_origins=[
+		"http://localhost:5173",
+		"https://mini-notes-app-coral.vercel.app"
+	],
 	allow_credentials=True,
 	allow_methods=["*"],
 	allow_headers=["*"],
