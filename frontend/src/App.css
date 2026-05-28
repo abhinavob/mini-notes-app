@@ -161,6 +161,13 @@
   align-items: start;
 }
 
+.note-card-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
 .note-card h3 {
   margin: 0;
   font-size: 1.1rem;

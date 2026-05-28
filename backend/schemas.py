@@ -18,6 +18,12 @@ class NoteCreate(NoteBase):
 	pass
 
 
+class NoteUpdate(NoteBase):
+	"""Data needed to update a note."""
+
+	pass
+
+
 class NoteOut(NoteBase):
 	"""Data returned when a note is read from the API."""
 

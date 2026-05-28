@@ -1,11 +1,16 @@
-export default function NoteCard({ note, onDelete }) {
+export default function NoteCard({ note, onEdit, onDelete }) {
   return (
     <article className="note-card">
       <div className="note-card-header">
         <h3>{note.title}</h3>
-        <button type="button" className="danger-button" onClick={() => onDelete(note.id)}>
-          Delete
-        </button>
+        <div className="note-card-actions">
+          <button type="button" className="secondary-button" onClick={() => onEdit(note)}>
+            Edit
+          </button>
+          <button type="button" className="danger-button" onClick={() => onDelete(note.id)}>
+            Delete
+          </button>
+        </div>
       </div>
 
       <p className="note-card-content">{note.content || 'No content added yet.'}</p>

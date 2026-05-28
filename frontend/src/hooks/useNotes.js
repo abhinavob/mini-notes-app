@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 
-import { createNote, deleteNote, getNotes } from '../api/notes';
+import { createNote, deleteNote, getNotes, updateNote } from '../api/notes';
 
 export function useNotes() {
   const [notes, setNotes] = useState([]);
@@ -61,6 +61,11 @@ export function useNotes() {
     await loadNotes();
   };
 
+  const handleUpdate = async (id, note) => {
+    await updateNote(id, note);
+    await loadNotes();
+  };
+
   const handleDelete = async (id) => {
     await deleteNote(id);
     await loadNotes();
@@ -77,6 +82,7 @@ export function useNotes() {
     activeTag,
     setActiveTag,
     createNote: handleCreate,
+    updateNote: handleUpdate,
     deleteNote: handleDelete,
   };
 }

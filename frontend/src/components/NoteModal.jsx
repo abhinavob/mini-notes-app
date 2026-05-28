@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { EMPTY_NOTE_FORM, parseTags } from '../data/notes';
 
-export default function NoteModal({ open, onClose, onSave }) {
+export default function NoteModal({ open, note, onClose, onSave }) {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [tagsInput, setTagsInput] = useState('');
@@ -11,10 +11,10 @@ export default function NoteModal({ open, onClose, onSave }) {
   useEffect(() => {
     if (!open) return;
 
-    setTitle(EMPTY_NOTE_FORM.title);
-    setContent(EMPTY_NOTE_FORM.content);
-    setTagsInput(EMPTY_NOTE_FORM.tags);
-  }, [open]);
+    setTitle(note?.title || EMPTY_NOTE_FORM.title);
+    setContent(note?.content || EMPTY_NOTE_FORM.content);
+    setTagsInput((note?.tags || []).join(', '));
+  }, [open, note]);
 
   if (!open) return null;
 
@@ -41,7 +41,7 @@ export default function NoteModal({ open, onClose, onSave }) {
     <div className="overlay" onClick={(event) => event.target === event.currentTarget && onClose()}>
       <div className="modal" role="dialog" aria-modal="true" aria-labelledby="note-modal-title">
         <div className="modal-header">
-          <h2 id="note-modal-title">New note</h2>
+          <h2 id="note-modal-title">{note ? 'Edit note' : 'New note'}</h2>
           <button type="button" className="icon-button" onClick={onClose} aria-label="Close">
             ×
           </button>
@@ -83,7 +83,7 @@ export default function NoteModal({ open, onClose, onSave }) {
               Cancel
             </button>
             <button type="submit" className="primary-button" disabled={saving}>
-              {saving ? 'Saving...' : 'Save note'}
+              {saving ? 'Saving...' : note ? 'Update note' : 'Save note'}
             </button>
           </div>
         </form>

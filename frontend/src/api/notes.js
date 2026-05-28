@@ -40,6 +40,13 @@ export function createNote(note) {
   });
 }
 
+export function updateNote(id, note) {
+  return request(`/notes/${id}`, {
+    method: 'PUT',
+    body: JSON.stringify(note),
+  });
+}
+
 export function deleteNote(id) {
   return request(`/notes/${id}`, {
     method: 'DELETE',

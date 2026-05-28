@@ -18,9 +18,26 @@ function App() {
     activeTag,
     setActiveTag,
     createNote,
+    updateNote,
     deleteNote,
   } = useNotes();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedNote, setSelectedNote] = useState(null);
+
+  const openCreateModal = () => {
+    setSelectedNote(null);
+    setIsModalOpen(true);
+  };
+
+  const openEditModal = (note) => {
+    setSelectedNote(note);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedNote(null);
+  };
 
   const handleDelete = async (id) => {
     const confirmDelete = window.confirm('Delete this note?');
@@ -40,7 +57,7 @@ function App() {
           </p>
         </div>
 
-        <button className="primary-button" onClick={() => setIsModalOpen(true)}>
+        <button className="primary-button" onClick={openCreateModal}>
           New note
         </button>
       </header>
@@ -76,7 +93,12 @@ function App() {
 
           <div className="notes-grid">
             {filteredNotes.map((note) => (
-              <NoteCard key={note.id} note={note} onDelete={handleDelete} />
+              <NoteCard
+                key={note.id}
+                note={note}
+                onEdit={openEditModal}
+                onDelete={handleDelete}
+              />
             ))}
           </div>
         </section>
@@ -84,10 +106,15 @@ function App() {
 
       <NoteModal
         open={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
+        note={selectedNote}
+        onClose={closeModal}
         onSave={async (noteData) => {
-          await createNote(noteData);
-          setIsModalOpen(false);
+          if (selectedNote) {
+            await updateNote(selectedNote.id, noteData);
+          } else {
+            await createNote(noteData);
+          }
+          closeModal();
         }}
       />
     </div>

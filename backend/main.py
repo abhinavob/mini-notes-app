@@ -7,9 +7,9 @@ from fastapi import Depends, FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 
-from crud import create_note, delete_note, get_notes
+from crud import create_note, delete_note, get_notes, update_note
 from database import Base, SessionLocal, engine
-from schemas import NoteCreate, NoteOut
+from schemas import NoteCreate, NoteOut, NoteUpdate
 
 # Create the notes table if it does not exist yet.
 Base.metadata.create_all(bind=engine)
@@ -45,6 +45,15 @@ def read_notes(db: Session = Depends(get_db)):
 def add_note(note: NoteCreate, db: Session = Depends(get_db)):
 	# Create a new note from the request body.
 	return create_note(db, note)
+
+
+@app.put("/notes/{note_id}", response_model=NoteOut)
+def edit_note(note_id: int, note: NoteUpdate, db: Session = Depends(get_db)):
+	# Update an existing note.
+	updated = update_note(db, note_id, note)
+	if not updated:
+		raise HTTPException(status_code=404, detail="Note not found")
+	return updated
 
 
 @app.delete("/notes/{note_id}")
