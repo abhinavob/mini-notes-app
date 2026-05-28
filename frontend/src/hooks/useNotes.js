@@ -7,7 +7,7 @@ export function useNotes() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [search, setSearch] = useState('');
-  const [activeTag, setActiveTag] = useState('');
+  const [selectedTags, setSelectedTags] = useState([]);
 
   const loadNotes = async () => {
     try {
@@ -50,11 +50,25 @@ export function useNotes() {
         content.includes(searchText) ||
         noteTags.some((tag) => tag.toLowerCase().includes(searchText));
 
-      const matchesTag = activeTag === '' || noteTags.includes(activeTag);
+      const matchesTags =
+        selectedTags.length === 0 ||
+        noteTags.some((tag) => selectedTags.includes(tag));
 
-      return matchesSearch && matchesTag;
+      return matchesSearch && matchesTags;
     });
-  }, [notes, search, activeTag]);
+  }, [notes, search, selectedTags]);
+
+  const toggleTag = (tag) => {
+    setSelectedTags((currentTags) =>
+      currentTags.includes(tag)
+        ? currentTags.filter((currentTag) => currentTag !== tag)
+        : [...currentTags, tag],
+    );
+  };
+
+  const clearTags = () => {
+    setSelectedTags([]);
+  };
 
   const handleCreate = async (note) => {
     await createNote(note);
@@ -79,8 +93,9 @@ export function useNotes() {
     error,
     search,
     setSearch,
-    activeTag,
-    setActiveTag,
+    selectedTags,
+    toggleTag,
+    clearTags,
     createNote: handleCreate,
     updateNote: handleUpdate,
     deleteNote: handleDelete,

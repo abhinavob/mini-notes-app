@@ -15,8 +15,9 @@ function App() {
     error,
     search,
     setSearch,
-    activeTag,
-    setActiveTag,
+    selectedTags,
+    toggleTag,
+    clearTags,
     createNote,
     updateNote,
     deleteNote,
@@ -50,14 +51,17 @@ function App() {
     <div className="app-shell">
       <header className="hero">
         <div>
-          <p className="eyebrow">FastAPI + React</p>
+          {/* <p className="eyebrow">FastAPI + React</p> */}
           <h1>Mini Notes</h1>
           <p className="hero-copy">
-            Create, search, and filter simple notes stored in SQLite.
+            Create, search, and filter mini notes.
           </p>
         </div>
 
-        <button className="primary-button" onClick={openCreateModal}>
+        <button className="primary-button new-note-button" onClick={openCreateModal}>
+          <span className="new-note-icon" aria-hidden="true">
+            +
+          </span>
           New note
         </button>
       </header>
@@ -81,7 +85,12 @@ function App() {
       </section>
 
       <main className="layout">
-        <Sidebar tags={tags} activeTag={activeTag} onTagSelect={setActiveTag} />
+        <Sidebar
+          tags={tags}
+          selectedTags={selectedTags}
+          onToggleTag={toggleTag}
+          onClearTags={clearTags}
+        />
 
         <section className="content-panel">
           {loading && <p className="state-message">Loading notes...</p>}
@@ -96,7 +105,7 @@ function App() {
               <NoteCard
                 key={note.id}
                 note={note}
-                onEdit={openEditModal}
+                onOpen={openEditModal}
                 onDelete={handleDelete}
               />
             ))}

@@ -1,12 +1,14 @@
-export default function Sidebar({ tags, activeTag, onTagSelect }) {
+export default function Sidebar({ tags, selectedTags, onToggleTag, onClearTags }) {
+  const hasSelectedTags = selectedTags.length > 0;
+
   return (
     <aside className="sidebar">
       <h2>Tags</h2>
 
       <button
         type="button"
-        className={`tag-filter ${activeTag === '' ? 'active' : ''}`}
-        onClick={() => onTagSelect('')}
+        className={`tag-filter tag-filter-all ${!hasSelectedTags ? 'active' : ''}`}
+        onClick={onClearTags}
       >
         All notes
       </button>
@@ -18,8 +20,8 @@ export default function Sidebar({ tags, activeTag, onTagSelect }) {
           <button
             key={tag}
             type="button"
-            className={`tag-filter ${activeTag === tag ? 'active' : ''}`}
-            onClick={() => onTagSelect(tag)}
+            className={`tag-filter ${selectedTags.includes(tag) ? 'active' : ''}`}
+            onClick={() => onToggleTag(tag)}
           >
             {tag}
           </button>

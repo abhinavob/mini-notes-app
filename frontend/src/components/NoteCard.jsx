@@ -1,14 +1,33 @@
-export default function NoteCard({ note, onEdit, onDelete }) {
+export default function NoteCard({ note, onOpen, onDelete }) {
+  const handleCardKeyDown = (event) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      onOpen(note);
+    }
+  };
+
   return (
-    <article className="note-card">
+    <article
+      className="note-card"
+      role="button"
+      tabIndex={0}
+      onClick={() => onOpen(note)}
+      onKeyDown={handleCardKeyDown}
+      aria-label={`Open note ${note.title}`}
+    >
       <div className="note-card-header">
         <h3>{note.title}</h3>
         <div className="note-card-actions">
-          <button type="button" className="secondary-button" onClick={() => onEdit(note)}>
-            Edit
-          </button>
-          <button type="button" className="danger-button" onClick={() => onDelete(note.id)}>
-            Delete
+          <button
+            type="button"
+            className="danger-button danger-button-icon"
+            onClick={(event) => {
+              event.stopPropagation();
+              onDelete(note.id);
+            }}
+            aria-label="Delete note"
+          >
+            ✕
           </button>
         </div>
       </div>

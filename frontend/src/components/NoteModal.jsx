@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { EMPTY_NOTE_FORM, parseTags } from '../data/notes';
 
@@ -7,6 +7,14 @@ export default function NoteModal({ open, note, onClose, onSave }) {
   const [content, setContent] = useState('');
   const [tagsInput, setTagsInput] = useState('');
   const [saving, setSaving] = useState(false);
+  const contentRef = useRef(null);
+
+  const resizeContentArea = () => {
+    if (!contentRef.current) return;
+
+    contentRef.current.style.height = 'auto';
+    contentRef.current.style.height = `${contentRef.current.scrollHeight}px`;
+  };
 
   useEffect(() => {
     if (!open) return;
@@ -15,6 +23,12 @@ export default function NoteModal({ open, note, onClose, onSave }) {
     setContent(note?.content || EMPTY_NOTE_FORM.content);
     setTagsInput((note?.tags || []).join(', '));
   }, [open, note]);
+
+  useEffect(() => {
+    if (!open) return;
+
+    resizeContentArea();
+  }, [open, content]);
 
   if (!open) return null;
 
@@ -41,34 +55,35 @@ export default function NoteModal({ open, note, onClose, onSave }) {
     <div className="overlay" onClick={(event) => event.target === event.currentTarget && onClose()}>
       <div className="modal" role="dialog" aria-modal="true" aria-labelledby="note-modal-title">
         <div className="modal-header">
-          <h2 id="note-modal-title">{note ? 'Edit note' : 'New note'}</h2>
+          <span id="note-modal-title" className="modal-kicker">
+            {note ? 'Edit note' : 'New note'}
+          </span>
           <button type="button" className="icon-button" onClick={onClose} aria-label="Close">
             ×
           </button>
         </div>
 
         <form className="modal-form" onSubmit={handleSubmit}>
-          <label>
-            Title
-            <input
-              type="text"
-              value={title}
-              onChange={(event) => setTitle(event.target.value)}
-              placeholder="A simple note title"
-            />
-          </label>
+          <input
+            className="modal-note-title"
+            type="text"
+            value={title}
+            onChange={(event) => setTitle(event.target.value)}
+            placeholder="A simple note title"
+            aria-label="Note title"
+          />
 
-          <label>
-            Content
-            <textarea
-              value={content}
-              onChange={(event) => setContent(event.target.value)}
-              placeholder="Write the note content here"
-              rows="6"
-            />
-          </label>
+          <textarea
+            ref={contentRef}
+            className="modal-note-content"
+            value={content}
+            onChange={(event) => setContent(event.target.value)}
+            placeholder="Write your note here..."
+            rows="12"
+            aria-label="Note content"
+          />
 
-          <label>
+          <label className="modal-field">
             Tags
             <input
               type="text"
