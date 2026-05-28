@@ -1,8 +1,3 @@
-"""CRUD helpers for notes.
-
-This file keeps the database operations in one simple place.
-"""
-
 from sqlalchemy.orm import Session
 
 from models import Note

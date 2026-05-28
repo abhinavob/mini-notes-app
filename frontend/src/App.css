@@ -51,7 +51,10 @@
 .sidebar h2 {
   display: block;
   margin-bottom: 10px;
-  font-size: 0.9rem;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   color: #374151;
 }
 

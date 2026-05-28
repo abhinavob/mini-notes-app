@@ -1,8 +1,3 @@
-"""FastAPI entry point for the mini notes app.
-
-This file creates the app and exposes the note endpoints.
-"""
-
 from fastapi import Depends, FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
@@ -15,8 +10,6 @@ from schemas import NoteCreate, NoteOut, NoteUpdate
 Base.metadata.create_all(bind=engine)
 
 def get_db():
-	"""Create a database session for each request."""
-
 	db = SessionLocal()
 	try:
 		yield db
